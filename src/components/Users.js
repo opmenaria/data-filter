@@ -18,16 +18,21 @@ export default function Users() {
 
     const handleSearch = async (e) => {
         setSearchQuery(e.target.value);
+    }
+    const dataFilter = async (e) => {
         const fetched = await axios.get('https://jsonplaceholder.typicode.com/users')
         const filteredData = fetched.data?.filter((item) => {
             const lowercaseName = item.name.toLowerCase();
             const lowercaseQuery = searchQuery.toLowerCase();
-            return lowercaseName.includes(lowercaseQuery);
+            return (
+                searchQuery.length !== '' ? lowercaseName.includes(lowercaseQuery) : fetchData()
+            )
         });
-        console.log(filteredData);
         setTableData(filteredData)
     };
-
+    useEffect(() => {
+        dataFilter()
+    }, [searchQuery])
 
     const handleEdit = (id) => {
         if (isEditing === id) {
