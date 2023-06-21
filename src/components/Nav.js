@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 
 export default function Navbar() {
@@ -14,10 +14,6 @@ export default function Navbar() {
                 <Link to='/users'>
                     <div className=' text-yellow-300 hover:text-white border-y  px-2 rounded-md'>Users</div>
                 </Link>
-                <Link to='/Contect'>
-                    <div className=' text-yellow-300 hover:text-white border-y  px-2 rounded-md'>Contact Us</div>
-                </Link>
-
             </div>
 
         </div>

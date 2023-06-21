@@ -16,10 +16,18 @@ export default function Users() {
         }
     };
 
-    const handleSearch = (e) => {
+    const handleSearch = async (e) => {
         setSearchQuery(e.target.value);
-        // Perform search logic here
+        const fetched = await axios.get('https://jsonplaceholder.typicode.com/users')
+        const filteredData = fetched.data?.filter((item) => {
+            const lowercaseName = item.name.toLowerCase();
+            const lowercaseQuery = searchQuery.toLowerCase();
+            return lowercaseName.includes(lowercaseQuery);
+        });
+        console.log(filteredData);
+        setTableData(filteredData)
     };
+
 
     const handleEdit = (id) => {
         if (isEditing === id) {
@@ -64,23 +72,9 @@ export default function Users() {
                     Data Filter App
                 </h2>
                 <div className="absolute right-32 mx-auto w-64">
-                    <input
-                        type="text"
-                        placeholder="Search"
-                        value={searchQuery}
-                        onChange={handleSearch}
-                        className="w-full px-4 py-2 rounded-md shadow-md focus:outline-none ring-1 ring-gray-400 focus:ring-2 focus:ring-blue-500"
+                    <input type="text" placeholder="Search" value={searchQuery} onChange={handleSearch} className="w-full px-4 py-2 rounded-md shadow-md focus:outline-none ring-1 ring-gray-400 focus:ring-2 focus:ring-blue-500"
                     />
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                    >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <circle cx="11" cy="11" r="8" />
                         <line x1="21" y1="21" x2="16.65" y2="16.65" />
                     </svg>
@@ -149,7 +143,7 @@ export default function Users() {
                             </td>
                             <td className="flex justify-between">
                                 <button
-                                    className={`${isEditing === el.id ? "bg-yellow-300 border border-gray-600 w-20 font-semibold" : "bg-yellow-300 w-20 font-semibold"}`}
+                                    className={`${isEditing === el.id ? "bg-yellow-300 border-2 border-gray-600 w-20 font-semibold" : "bg-yellow-300 w-20 font-semibold"}`}
                                     onClick={() => handleEdit(el.id)}
                                     disabled={isEditing !== null && isEditing !== el.id}
                                 >
