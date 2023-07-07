@@ -9,8 +9,10 @@ export default function Users() {
 
     const fetchData = async () => {
         try {
+            // const response = await axios.get('https://jsonplaceholder.typicode.com/users');
             const response = await axios.get('https://jsonplaceholder.typicode.com/users');
             setTableData(response.data);
+            console.log(response.data);
         } catch (error) {
             console.log('Failed to fetch data');
         }
@@ -19,7 +21,7 @@ export default function Users() {
     const handleSearch = async (e) => {
         setSearchQuery(e.target.value);
     }
-    const dataFilter = async (e) => {
+    const dataFilter = async () => {
         const fetched = await axios.get('https://jsonplaceholder.typicode.com/users')
         const filteredData = fetched.data?.filter((item) => {
             const lowercaseName = item.name.toLowerCase();
